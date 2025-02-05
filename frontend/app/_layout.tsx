@@ -34,14 +34,11 @@ export default function RootLayout() {
   return (
     <PaperProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <View className="flex-1">
-          <View className="absolute inset-0 bg-gradient-to-br from-purple-600 to-indigo-800" />
-          <Stack>
-            <Stack.Screen name="(base)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="auto" />
-        </View>
+        <Stack>
+          <Stack.Screen name="(base)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="auto" />
       </ThemeProvider>
     </PaperProvider>
   );
