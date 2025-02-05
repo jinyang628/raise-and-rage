@@ -16,12 +16,6 @@ export default function MainMenu() {
           </TouchableOpacity>
         </Link>
 
-        <Link href="/settings" asChild>
-          <TouchableOpacity className="mb-6 transform rounded-xl bg-sky-500 py-4 shadow-xl transition-all hover:bg-sky-600 active:scale-95 active:bg-sky-700">
-            <Text className="text-center text-xl font-bold text-white">Settings</Text>
-          </TouchableOpacity>
-        </Link>
-
         <Link href="/splitwise" asChild>
           <TouchableOpacity className="transform rounded-xl bg-rose-500 py-4 shadow-xl transition-all hover:bg-rose-600 active:scale-95 active:bg-rose-700">
             <Text className="text-center text-xl font-bold text-white">Connect Splitwise</Text>
