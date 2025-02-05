@@ -1,58 +1,33 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 import { Link } from 'expo-router';
 
 export default function MainMenu() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>My Game</Text>
+    <View className="flex-1 items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800 p-6">
+      <View className="w-full max-w-md rounded-2xl border border-white/10 bg-white/20 p-8 shadow-2xl backdrop-blur-lg">
+        <Text className="mb-12 text-center text-5xl font-bold tracking-tight text-white drop-shadow-lg">
+          Raise & Rage
+        </Text>
 
-      <Link href="/play" asChild>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Play</Text>
-        </TouchableOpacity>
-      </Link>
+        <Link href="/play" asChild>
+          <TouchableOpacity className="mb-6 transform rounded-xl bg-emerald-500 py-4 shadow-xl transition-all hover:bg-emerald-600 active:scale-95 active:bg-emerald-700">
+            <Text className="text-center text-xl font-bold text-white">Play</Text>
+          </TouchableOpacity>
+        </Link>
 
-      <Link href="/settings" asChild>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Settings</Text>
-        </TouchableOpacity>
-      </Link>
+        <Link href="/settings" asChild>
+          <TouchableOpacity className="mb-6 transform rounded-xl bg-sky-500 py-4 shadow-xl transition-all hover:bg-sky-600 active:scale-95 active:bg-sky-700">
+            <Text className="text-center text-xl font-bold text-white">Settings</Text>
+          </TouchableOpacity>
+        </Link>
 
-      <Link href="/splitwise" asChild>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Connect with Splitwise</Text>
-        </TouchableOpacity>
-      </Link>
+        <Link href="/splitwise" asChild>
+          <TouchableOpacity className="transform rounded-xl bg-rose-500 py-4 shadow-xl transition-all hover:bg-rose-600 active:scale-95 active:bg-rose-700">
+            <Text className="text-center text-xl font-bold text-white">Connect Splitwise</Text>
+          </TouchableOpacity>
+        </Link>
+      </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-    padding: 20,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    marginBottom: 40,
-    color: '#333',
-  },
-  button: {
-    width: '80%',
-    padding: 15,
-    backgroundColor: '#6200ee',
-    borderRadius: 10,
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  buttonText: {
-    fontSize: 18,
-    color: '#fff',
-    fontWeight: 'bold',
-  },
-});
