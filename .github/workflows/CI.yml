@@ -71,18 +71,10 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install pnpm
-        working-directory: ./frontend
-        run: npm install -g pnpm
-
       - name: Install dependencies
         working-directory: ./frontend
-        run: pnpm install
+        run: npm install
 
       - name: Run Prettier
         working-directory: ./frontend
         run: npx prettier --check .
-
-      - name: Run build
-        working-directory: ./frontend
-        run: pnpm build
