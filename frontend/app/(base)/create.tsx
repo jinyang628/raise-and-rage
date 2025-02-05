@@ -22,7 +22,7 @@ export default function CreateRoomScreen() {
     });
     const createRoomResponse: CreateRoomResponse = await createRoom(createRoomRequest);
     console.log(`Room created with code ${createRoomResponse.room_code}`);
-    router.push(`/rooms/${createRoomResponse.room_code}`);
+    router.push(`/rooms/${createRoomResponse.room_code}?number_of_players=${numberOfPlayers}`);
   };
 
   return (
