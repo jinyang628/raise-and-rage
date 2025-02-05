@@ -10,7 +10,7 @@ export default function MainMenu() {
           Raise & Rage
         </Text>
 
-        <Link href="/play" asChild>
+        <Link href="/lobby" asChild>
           <TouchableOpacity className="mb-6 transform rounded-xl bg-emerald-500 py-4 shadow-xl transition-all hover:bg-emerald-600 active:scale-95 active:bg-emerald-700">
             <Text className="text-center text-xl font-bold text-white">Play</Text>
           </TouchableOpacity>
