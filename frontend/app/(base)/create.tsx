@@ -1,15 +1,28 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
+import { createRoom } from '@/api/room/create';
+import {
+  CreateRoomRequest,
+  CreateRoomResponse,
+  createRoomRequestSchema,
+} from '@/utils/types/api/room/create';
 import Slider from '@react-native-community/slider';
+import { router } from 'expo-router';
 
 import CardWrapper from '@/components/shared/card-wrapper';
 
 export default function CreateRoomScreen() {
   const [numberOfPlayers, setNumberOfPlayers] = useState<number>(2);
 
-  const handleCreateRoom = () => {
+  const handleCreateRoom = async () => {
     console.log(`Creating room with ${numberOfPlayers} players...`);
+    const createRoomRequest: CreateRoomRequest = createRoomRequestSchema.parse({
+      number_of_players: numberOfPlayers,
+    });
+    const createRoomResponse: CreateRoomResponse = await createRoom(createRoomRequest);
+    console.log(`Room created with code ${createRoomResponse.room_code}`);
+    router.push(`/rooms/${createRoomResponse.room_code}`);
   };
 
   return (
