@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 
+import { Link } from 'expo-router';
+
 export default function LobbyScreen() {
   const [roomCode, setRoomCode] = useState<string>('');
 
@@ -13,12 +15,14 @@ export default function LobbyScreen() {
 
   return (
     <View className="flex-1 items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800 p-6">
-      <View className="w-full max-w-md space-y-4 rounded-2xl border border-white/10 bg-white/20 p-8 shadow-2xl backdrop-blur-lg">
+      <View className="flex w-full min-w-[400px] max-w-md space-y-6 rounded-2xl border border-white/10 bg-white/20 p-8 shadow-2xl backdrop-blur-lg">
         <Text className="mb-4 text-center text-3xl font-bold text-white">Game Lobby</Text>
 
-        <TouchableOpacity className="w-full rounded-xl bg-emerald-500 py-4">
-          <Text className="text-center text-lg font-bold text-white">Create Room</Text>
-        </TouchableOpacity>
+        <Link href="/create" asChild>
+          <TouchableOpacity className="w-full rounded-xl bg-emerald-500 py-4">
+            <Text className="text-center text-lg font-bold text-white">Create Room</Text>
+          </TouchableOpacity>
+        </Link>
 
         <View className="h-1 w-full bg-white/20" />
 

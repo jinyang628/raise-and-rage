@@ -5,7 +5,7 @@ import { Link } from 'expo-router';
 export default function MainMenu() {
   return (
     <View className="flex-1 items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800 p-6">
-      <View className="w-full max-w-md rounded-2xl border border-white/10 bg-white/20 p-8 shadow-2xl backdrop-blur-lg">
+      <View className="w-full min-w-[400px] max-w-md rounded-2xl border border-white/10 bg-white/20 p-8 shadow-2xl backdrop-blur-lg">
         <Text className="mb-12 text-center text-5xl font-bold tracking-tight text-white drop-shadow-lg">
           Raise & Rage
         </Text>
