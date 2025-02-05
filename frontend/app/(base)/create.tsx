@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { createRoom } from '@/api/room/create';
+import { MAX_NUM_PLAYERS } from '@/constants/game';
 import {
   CreateRoomRequest,
   CreateRoomResponse,
@@ -36,7 +37,7 @@ export default function CreateRoomScreen() {
           <View className="w-full px-4">
             <Slider
               minimumValue={2}
-              maximumValue={10}
+              maximumValue={MAX_NUM_PLAYERS}
               step={1}
               value={numberOfPlayers}
               onValueChange={setNumberOfPlayers}
