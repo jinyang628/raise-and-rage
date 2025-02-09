@@ -23,9 +23,10 @@ class RoomsController:
         )
         async def create_room(input: CreateRoomRequest) -> CreateRoomResponse:
             try:
-                log.info("Creating room with %s players", input.number_of_players)
+                log.info("Creating room...")
                 response: CreateRoomResponse = await self.service.create_room(
-                    number_of_players=input.number_of_players
+                    buy_in_amount=input.buy_in_amount,
+                    small_blind_amount=input.small_blind_amount,
                 )
                 log.info("Room created with code %s", response.room_code)
                 return response
