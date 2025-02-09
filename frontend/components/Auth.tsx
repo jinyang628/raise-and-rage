@@ -17,6 +17,7 @@ export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState('');
 
   async function signInWithEmail() {
     setLoading(true);
@@ -31,16 +32,41 @@ export default function Auth() {
 
   async function signUpWithEmail() {
     setLoading(true);
+
+    // Step 1: Sign up the user with email and password
     const {
-      data: { session },
+      data: { user, session },
       error,
     } = await supabase.auth.signUp({
       email: email,
       password: password,
     });
 
-    if (error) Alert.alert(error.message);
-    if (!session) Alert.alert('Please check your inbox for email verification!');
+    if (error) {
+      Alert.alert(error.message);
+      setLoading(false);
+      return;
+    }
+
+    if (!session) {
+      Alert.alert('Please check your inbox for email verification!');
+      setLoading(false);
+      return;
+    }
+
+    const { error: profileError } = await supabase.from('profiles').insert([
+      {
+        id: user?.id,
+        username: username,
+      },
+    ]);
+
+    if (profileError) {
+      Alert.alert(profileError.message);
+    } else {
+      Alert.alert('Sign-up successful! Please verify your email.');
+    }
+
     setLoading(false);
   }
 
@@ -51,7 +77,17 @@ export default function Auth() {
           Raise & Rage
         </Text>
 
-        {/* Email Input */}
+        <View className="mb-4">
+          <TextInput
+            className="w-full rounded-xl bg-white p-4 text-black shadow-lg"
+            placeholder="Username"
+            placeholderTextColor="#9CA3AF"
+            onChangeText={(text) => setUsername(text)}
+            value={username}
+            autoCapitalize="none"
+          />
+        </View>
+
         <View className="mb-4">
           <TextInput
             className="w-full rounded-xl bg-white p-4 text-black shadow-lg"
@@ -63,7 +99,6 @@ export default function Auth() {
           />
         </View>
 
-        {/* Password Input */}
         <View className="mb-6">
           <TextInput
             className="w-full rounded-xl bg-white p-4 text-black shadow-lg"
