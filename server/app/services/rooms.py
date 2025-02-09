@@ -10,22 +10,21 @@ log = logging.getLogger(__name__)
 
 class RoomsService:
     async def create_room(self, buy_in_amount: int, small_blind_amount: int) -> CreateRoomResponse:
-        room_code = _generate_room_code(
+        room_id = _generate_room_id(
             buy_in_amount=buy_in_amount, small_blind_amount=small_blind_amount
         )
-        log.info("Room code generated: %s", room_code)
         await POST(
             "rooms",
             Room(
-                room_code=room_code,
+                id=room_id,
                 buy_in_amount=buy_in_amount,
                 small_blind_amount=small_blind_amount,
             ),
         )
-        return CreateRoomResponse(room_code=room_code)
+        return CreateRoomResponse(room_id=room_id)
 
 
-def _generate_room_code(buy_in_amount: int, small_blind_amount: int) -> str:
+def _generate_room_id(buy_in_amount: int, small_blind_amount: int) -> str:
     current_time = datetime.now().isoformat()
     combined_input = f"{buy_in_amount}{small_blind_amount}{current_time}"
     hash_object = hashlib.sha256(combined_input.encode())

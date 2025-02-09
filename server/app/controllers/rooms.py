@@ -28,8 +28,8 @@ class RoomsController:
                     buy_in_amount=input.buy_in_amount,
                     small_blind_amount=input.small_blind_amount,
                 )
-                log.info("Room created with code %s", response.room_code)
+                log.info("Room created with code %s", response.room_id)
                 return response
             except Exception as e:
-                log.error("Unexpected error in users controller.py: %s", str(e))
+                log.error("Unexpected error in rooms controller.py: %s", str(e))
                 raise HTTPException(status_code=500, detail="An unexpected error occurred") from e

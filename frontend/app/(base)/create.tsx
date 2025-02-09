@@ -29,8 +29,8 @@ export default function CreateRoomScreen() {
       small_blind_amount: smallBlindAmount,
     });
     const createRoomResponse: CreateRoomResponse = await createRoom(createRoomRequest);
-    console.log(`Room created with code ${createRoomResponse.room_code}`);
-    router.push(`/rooms/${createRoomResponse.room_code}`);
+    console.log(`Room created with code ${createRoomResponse.room_id}`);
+    router.push(`/rooms/${createRoomResponse.room_id}`);
   };
 
   return (

@@ -14,7 +14,7 @@ export const createRoomRequestSchema = z.object({
 export type CreateRoomRequest = z.infer<typeof createRoomRequestSchema>;
 
 export const createRoomResponseSchema = z.object({
-  room_code: z.string(),
+  room_id: z.string(),
 });
 
 export type CreateRoomResponse = z.infer<typeof createRoomResponseSchema>;
