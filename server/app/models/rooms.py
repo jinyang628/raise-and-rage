@@ -2,7 +2,8 @@ from pydantic import BaseModel
 
 
 class CreateRoomRequest(BaseModel):
-    number_of_players: int
+    buy_in_amount: int
+    small_blind_amount: int
 
 
 class CreateRoomResponse(BaseModel):

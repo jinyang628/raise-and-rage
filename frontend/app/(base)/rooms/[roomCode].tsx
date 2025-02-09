@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimensions, Text, TouchableOpacity, View } from 'react-native';
 
-import { MAX_NUM_PLAYERS } from '@/constants/game';
+import { MIN_BUY_IN_AMOUNT } from '@/constants/game';
 import { useLocalSearchParams } from 'expo-router';
 
 const { width, height } = Dimensions.get('window');
@@ -18,7 +18,7 @@ const VERTICAL_SPACING = (TABLE_HEIGHT - 2 * CORNER_INSET) / (SEATS_PER_VERTICAL
 
 export default function RoomScreen() {
   const { roomCode, number_of_players } = useLocalSearchParams();
-  const numPlayers = parseInt(number_of_players as string, MAX_NUM_PLAYERS);
+  const numPlayers = parseInt(number_of_players as string, MIN_BUY_IN_AMOUNT);
 
   const getSeatPosition = (index: number) => {
     if (index < SEATS_PER_VERTICAL_SIDE) {
@@ -50,7 +50,7 @@ export default function RoomScreen() {
     }
   };
 
-  const seats = Array.from({ length: MAX_NUM_PLAYERS }).map((_, index) => {
+  const seats = Array.from({ length: MIN_BUY_IN_AMOUNT }).map((_, index) => {
     const isLocked = index >= numPlayers;
     const position = getSeatPosition(index);
 
