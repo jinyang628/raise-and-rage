@@ -3,7 +3,7 @@ import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { Link } from 'expo-router';
 
-import CardWrapper from '@/components/shared/card-wrapper';
+import CardWrapper from '@/components/shared/CardWrapper';
 
 export default function LobbyScreen() {
   const [roomCode, setRoomCode] = useState<string>('');

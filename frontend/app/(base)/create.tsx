@@ -16,7 +16,7 @@ import {
 import Slider from '@react-native-community/slider';
 import { router } from 'expo-router';
 
-import CardWrapper from '@/components/shared/card-wrapper';
+import CardWrapper from '@/components/shared/CardWrapper';
 
 export default function CreateRoomScreen() {
   const [buyInAmount, setBuyInAmount] = useState<number>(100);

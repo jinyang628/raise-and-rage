@@ -1,10 +1,29 @@
+import { useEffect, useState } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 
+import { supabase } from '@/utils/supabase';
+import { Session } from '@supabase/supabase-js';
 import { Link } from 'expo-router';
 
-import CardWrapper from '@/components/shared/card-wrapper';
+import Auth from '@/components/Auth';
+import CardWrapper from '@/components/shared/CardWrapper';
 
 export default function MainMenu() {
+  const [session, setSession] = useState<Session | null>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
+
+  if (!session || !session.user) {
+    return <Auth />;
+  }
   return (
     <CardWrapper>
       <Text className="my-9 text-center text-5xl font-bold tracking-tight text-white drop-shadow-lg">
