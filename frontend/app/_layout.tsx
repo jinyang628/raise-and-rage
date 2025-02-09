@@ -11,6 +11,8 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 
+import ProtectedRoute from '@/components/shared/protected-route';
+
 import '../styles/global.css';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -41,6 +43,7 @@ export default function RootLayout() {
   return (
     <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
       <ClerkLoaded>
+        {/* <ProtectedRoute> */}
         <PaperProvider>
           <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
             <Stack>
@@ -50,6 +53,7 @@ export default function RootLayout() {
             <StatusBar style="auto" />
           </ThemeProvider>
         </PaperProvider>
+        {/* </ProtectedRoute> */}
       </ClerkLoaded>
     </ClerkProvider>
   );
