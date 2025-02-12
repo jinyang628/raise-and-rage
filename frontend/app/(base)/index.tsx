@@ -26,7 +26,7 @@ export default function MainMenu() {
   }
   return (
     <CardWrapper>
-      <Text className="my-9 text-center text-5xl font-bold tracking-tight text-white drop-shadow-lg">
+      <Text className="mb-12 text-center text-5xl font-bold tracking-tight text-white drop-shadow-lg">
         Raise & Rage
       </Text>
 

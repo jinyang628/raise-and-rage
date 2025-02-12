@@ -18,6 +18,7 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState('');
+  const [isSignUp, setIsSignUp] = useState(true);
 
   async function signInWithEmail() {
     setLoading(true);
@@ -26,14 +27,13 @@ export default function Auth() {
       password: password,
     });
 
-    if (error) Alert.alert(error.message);
+    if (error) Alert.alert('Error', 'Email or password is incorrect');
     setLoading(false);
   }
 
   async function signUpWithEmail() {
     setLoading(true);
 
-    // Step 1: Sign up the user with email and password
     const {
       data: { user, session },
       error,
@@ -43,7 +43,7 @@ export default function Auth() {
     });
 
     if (error) {
-      Alert.alert(error.message);
+      Alert.alert('Error', error.message);
       setLoading(false);
       return;
     }
@@ -62,7 +62,7 @@ export default function Auth() {
     ]);
 
     if (profileError) {
-      Alert.alert(profileError.message);
+      Alert.alert('Error', profileError.message);
     } else {
       Alert.alert('Sign-up successful! Please verify your email.');
     }
@@ -72,25 +72,28 @@ export default function Auth() {
 
   return (
     <CardWrapper>
-      <View className="flex-1 justify-center p-4">
-        <Text className="my-9 text-center text-5xl font-bold tracking-tight text-white drop-shadow-lg">
-          Raise & Rage
-        </Text>
+      <Text className="text-center text-5xl font-bold tracking-tight text-white drop-shadow-lg">
+        Raise & Rage
+      </Text>
+
+      {/* Input Fields Container with Fixed Height */}
+      <View className="mb-4" style={{ minHeight: 200 }}>
+        {isSignUp && (
+          <View className="mb-4">
+            <TextInput
+              className="w-full rounded-xl bg-white p-3 text-black shadow-lg"
+              placeholder="Username"
+              placeholderTextColor="#9CA3AF"
+              onChangeText={(text) => setUsername(text)}
+              value={username}
+              autoCapitalize="none"
+            />
+          </View>
+        )}
 
         <View className="mb-4">
           <TextInput
-            className="w-full rounded-xl bg-white p-4 text-black shadow-lg"
-            placeholder="Username"
-            placeholderTextColor="#9CA3AF"
-            onChangeText={(text) => setUsername(text)}
-            value={username}
-            autoCapitalize="none"
-          />
-        </View>
-
-        <View className="mb-4">
-          <TextInput
-            className="w-full rounded-xl bg-white p-4 text-black shadow-lg"
+            className="w-full rounded-xl bg-white p-3 text-black shadow-lg"
             placeholder="Email"
             placeholderTextColor="#9CA3AF"
             onChangeText={(text) => setEmail(text)}
@@ -101,7 +104,7 @@ export default function Auth() {
 
         <View className="mb-6">
           <TextInput
-            className="w-full rounded-xl bg-white p-4 text-black shadow-lg"
+            className="w-full rounded-xl bg-white p-3 text-black shadow-lg"
             placeholder="Password"
             placeholderTextColor="#9CA3AF"
             onChangeText={(text) => setPassword(text)}
@@ -110,26 +113,27 @@ export default function Auth() {
             autoCapitalize="none"
           />
         </View>
-
-        {/* Sign In and Sign Up Buttons */}
-        <View className="flex-row justify-between space-x-4">
-          <TouchableOpacity
-            className="flex-1 rounded-xl bg-emerald-500 py-4 shadow-lg active:bg-emerald-600"
-            disabled={loading}
-            onPress={signInWithEmail}
-          >
-            <Text className="text-center text-lg font-bold text-white">Sign In</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            className="flex-1 rounded-xl bg-rose-500 py-4 shadow-lg active:bg-rose-600"
-            disabled={loading}
-            onPress={signUpWithEmail}
-          >
-            <Text className="text-center text-lg font-bold text-white">Sign Up</Text>
-          </TouchableOpacity>
-        </View>
       </View>
+
+      {/* Fixed Sign Up/Sign In Button */}
+      <View className="flex-row justify-between space-x-4">
+        <TouchableOpacity
+          className="flex-1 rounded-xl bg-emerald-500 py-3 shadow-lg active:bg-emerald-600"
+          disabled={loading}
+          onPress={isSignUp ? signUpWithEmail : signInWithEmail}
+        >
+          <Text className="text-center text-lg font-bold text-white">
+            {isSignUp ? 'Sign Up' : 'Sign In'}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Fixed Toggle Link */}
+      <TouchableOpacity onPress={() => setIsSignUp(!isSignUp)}>
+        <Text className="text-center text-white underline">
+          {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+        </Text>
+      </TouchableOpacity>
     </CardWrapper>
   );
 }

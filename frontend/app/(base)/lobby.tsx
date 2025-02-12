@@ -17,7 +17,7 @@ export default function LobbyScreen() {
 
   return (
     <CardWrapper>
-      <Text className="mb-4 text-center text-5xl font-bold text-white">Game Lobby</Text>
+      <Text className="mb-12 text-center text-5xl font-bold text-white">Game Lobby</Text>
 
       <Link href="/create" asChild>
         <TouchableOpacity className="w-full rounded-xl bg-emerald-500 py-4">
