@@ -21,39 +21,37 @@ export default function Auth() {
   const [isSignUp, setIsSignUp] = useState(true);
 
   useEffect(() => {
-    // Handle deep links
     const handleDeepLink = (event: any) => {
       const url = event.url || event;
       const params = new URLSearchParams(url.split('#')[1]);
 
-      const accessToken = params.get('access_token');
-      const refreshToken = params.get('refresh_token');
-      const expiresIn = params.get('expires_in');
-      const tokenType = params.get('token_type');
+      const accessToken: string | null = params.get('access_token');
+      const refreshToken: string | null = params.get('refresh_token');
 
-      if (accessToken && refreshToken) {
-        // Set the session in Supabase
-        supabase.auth
-          .setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken,
-          })
-          .then(({ data, error }) => {
-            if (error) {
-              Alert.alert('Error', error.message);
-            } else {
-              Alert.alert('Success', 'You have been authenticated!');
-              // Navigate to the main app screen
-            }
-          });
+      if (!accessToken || !refreshToken) {
+        console.error("Couldn't find access token or refresh token in deep link");
+        return;
       }
+
+      supabase.auth
+        .setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken,
+        })
+        .then(({ data, error }) => {
+          if (error) {
+            Alert.alert('Error', error.message);
+          } else {
+            Alert.alert('Success', 'You have been authenticated!');
+          }
+        });
     };
 
     // Listen for deep links
-    Linking.addEventListener('url', handleDeepLink);
+    const subscription = Linking.addEventListener('url', handleDeepLink);
 
     // Check if the app was launched from a deep link
-    Linking.getInitialURL().then((url) => {
+    Linking.getInitialURL().then((url: string | null) => {
       if (url) {
         handleDeepLink(url);
       }
@@ -61,7 +59,7 @@ export default function Auth() {
 
     // Cleanup
     return () => {
-      Linking.removeEventListener('url', handleDeepLink);
+      subscription.remove();
     };
   }, []);
 
