@@ -9,6 +9,7 @@ import { z } from 'zod';
 export const createRoomRequestSchema = z.object({
   buy_in_amount: z.number().min(MIN_BUY_IN_AMOUNT).max(MAX_BUY_IN_AMOUNT),
   small_blind_amount: z.number().min(MIN_SMALL_BLIND_AMOUNT).max(MAX_SMALL_BLIND_AMOUNT),
+  user_id: z.string(),
 });
 
 export type CreateRoomRequest = z.infer<typeof createRoomRequestSchema>;

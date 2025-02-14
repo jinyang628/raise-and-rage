@@ -3,7 +3,7 @@ import {
   CreateRoomRequest,
   CreateRoomResponse,
   createRoomResponseSchema,
-} from '@/utils/types/api/room/create';
+} from '@/utils/types/api/rooms/create';
 
 const CREATE_ROOM_ENDPOINT = '/api/rooms';
 

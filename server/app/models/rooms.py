@@ -4,6 +4,7 @@ from pydantic import BaseModel
 class CreateRoomRequest(BaseModel):
     buy_in_amount: int
     small_blind_amount: int
+    user_id: str
 
 
 class CreateRoomResponse(BaseModel):
@@ -14,4 +15,4 @@ class Room(BaseModel):
     id: str
     buy_in_amount: int
     small_blind_amount: int
-    num_players: int = 1
+    users: list[str]

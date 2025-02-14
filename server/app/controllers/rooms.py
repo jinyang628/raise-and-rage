@@ -27,6 +27,7 @@ class RoomsController:
                 response: CreateRoomResponse = await self.service.create_room(
                     buy_in_amount=input.buy_in_amount,
                     small_blind_amount=input.small_blind_amount,
+                    user_id=input.user_id,
                 )
                 log.info("Room created with code %s", response.room_id)
                 return response

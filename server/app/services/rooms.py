@@ -3,24 +3,26 @@ import logging
 from datetime import datetime
 
 from app.models.rooms import CreateRoomResponse, Room
-from app.utils.database import POST
+from app.utils.database import DatabaseManager
 
 log = logging.getLogger(__name__)
 
 
 class RoomsService:
-    async def create_room(self, buy_in_amount: int, small_blind_amount: int) -> CreateRoomResponse:
+    async def create_room(
+        self, buy_in_amount: int, small_blind_amount: int, user_id: str
+    ) -> CreateRoomResponse:
         room_id = _generate_room_id(
             buy_in_amount=buy_in_amount, small_blind_amount=small_blind_amount
         )
-        await POST(
-            "rooms",
-            Room(
-                id=room_id,
-                buy_in_amount=buy_in_amount,
-                small_blind_amount=small_blind_amount,
-            ),
+        db_manager = await DatabaseManager.get_instance()
+        room = Room(
+            id=room_id,
+            buy_in_amount=buy_in_amount,
+            small_blind_amount=small_blind_amount,
+            users=[user_id],
         )
+        await db_manager.client.table("rooms").insert(room.model_dump()).execute()
         return CreateRoomResponse(room_id=room_id)
 
 

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, AppState, Linking, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
+import { createProfile } from '@/api/profiles/create';
 import { supabase } from '@/utils/supabase';
+import { Profile, profileSchema } from '@/utils/types/api/profiles/create';
 
 import CardWrapper from '@/components/shared/CardWrapper';
 
@@ -38,12 +40,17 @@ export default function Auth() {
           access_token: accessToken,
           refresh_token: refreshToken,
         })
-        .then(({ data, error }) => {
+        .then(async ({ data, error }) => {
           if (error) {
-            Alert.alert('Error', error.message);
-          } else {
-            Alert.alert('Success', 'You have been authenticated!');
+            Alert.alert('Error', error.message || 'An unexpected error occurred');
+            return;
           }
+          const profile: Profile = profileSchema.parse({
+            username: username,
+            user_id: data.user?.id,
+          });
+          await createProfile(profile);
+          Alert.alert('Success', 'You have been authenticated!');
         });
     };
 

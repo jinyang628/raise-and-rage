@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 
-import { createRoom } from '@/api/room/create';
+import { createRoom } from '@/api/rooms/create';
 import {
   MAX_BUY_IN_AMOUNT,
   MAX_SMALL_BLIND_AMOUNT,
@@ -12,21 +12,24 @@ import {
   CreateRoomRequest,
   CreateRoomResponse,
   createRoomRequestSchema,
-} from '@/utils/types/api/room/create';
+} from '@/utils/types/api/rooms/create';
 import Slider from '@react-native-community/slider';
 import { router } from 'expo-router';
 
 import CardWrapper from '@/components/shared/CardWrapper';
+import { useAuth } from '@/components/shared/auth/AuthProvider';
 
 export default function CreateRoomScreen() {
   const [buyInAmount, setBuyInAmount] = useState<number>(100);
   const [smallBlindAmount, setSmallBlindAmount] = useState<number>(1);
+  const { session } = useAuth();
 
   const handleCreateRoom = async () => {
     console.log(`Creating room...`);
     const createRoomRequest: CreateRoomRequest = createRoomRequestSchema.parse({
       buy_in_amount: buyInAmount,
       small_blind_amount: smallBlindAmount,
+      user_id: session?.user?.id,
     });
     const createRoomResponse: CreateRoomResponse = await createRoom(createRoomRequest);
     console.log(`Room created with code ${createRoomResponse.room_id}`);
