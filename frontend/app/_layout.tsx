@@ -9,6 +9,9 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 
+import { AuthProvider } from '@/components/shared/auth/AuthProvider';
+import ProtectedLayout from '@/components/shared/auth/ProtectedLayout';
+
 import '@/styles/global.css';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -31,14 +34,18 @@ export default function RootLayout() {
   }
 
   return (
-    <PaperProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(base)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
-    </PaperProvider>
+    <AuthProvider>
+      <PaperProvider>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <ProtectedLayout>
+            <Stack>
+              <Stack.Screen name="(base)" options={{ headerShown: false }} />
+              <Stack.Screen name="+not-found" />
+            </Stack>
+            <StatusBar style="auto" />
+          </ProtectedLayout>
+        </ThemeProvider>
+      </PaperProvider>
+    </AuthProvider>
   );
 }

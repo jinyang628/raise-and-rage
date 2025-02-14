@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Alert, AppState, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, AppState, Linking, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 import { supabase } from '@/utils/supabase';
 
@@ -19,6 +19,51 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState('');
   const [isSignUp, setIsSignUp] = useState(true);
+
+  useEffect(() => {
+    // Handle deep links
+    const handleDeepLink = (event: any) => {
+      const url = event.url || event;
+      const params = new URLSearchParams(url.split('#')[1]);
+
+      const accessToken = params.get('access_token');
+      const refreshToken = params.get('refresh_token');
+      const expiresIn = params.get('expires_in');
+      const tokenType = params.get('token_type');
+
+      if (accessToken && refreshToken) {
+        // Set the session in Supabase
+        supabase.auth
+          .setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          })
+          .then(({ data, error }) => {
+            if (error) {
+              Alert.alert('Error', error.message);
+            } else {
+              Alert.alert('Success', 'You have been authenticated!');
+              // Navigate to the main app screen
+            }
+          });
+      }
+    };
+
+    // Listen for deep links
+    Linking.addEventListener('url', handleDeepLink);
+
+    // Check if the app was launched from a deep link
+    Linking.getInitialURL().then((url) => {
+      if (url) {
+        handleDeepLink(url);
+      }
+    });
+
+    // Cleanup
+    return () => {
+      Linking.removeEventListener('url', handleDeepLink);
+    };
+  }, []);
 
   async function signInWithEmail() {
     setLoading(true);
@@ -76,7 +121,6 @@ export default function Auth() {
         Raise & Rage
       </Text>
 
-      {/* Input Fields Container with Fixed Height */}
       <View className="mb-4" style={{ minHeight: 200 }}>
         {isSignUp && (
           <View className="mb-4">
@@ -115,7 +159,6 @@ export default function Auth() {
         </View>
       </View>
 
-      {/* Fixed Sign Up/Sign In Button */}
       <View className="flex-row justify-between space-x-4">
         <TouchableOpacity
           className="flex-1 rounded-xl bg-emerald-500 py-3 shadow-lg active:bg-emerald-600"
@@ -128,7 +171,6 @@ export default function Auth() {
         </TouchableOpacity>
       </View>
 
-      {/* Fixed Toggle Link */}
       <TouchableOpacity onPress={() => setIsSignUp(!isSignUp)}>
         <Text className="text-center text-white underline">
           {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
